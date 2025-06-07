@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Geta.API.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54e4cf2220fa74b3ca3b70e8fd531d8331cb3f28")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f3db7cbf8732f663e8fd4fdb0b0204d7112eb0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Geta.API.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Geta.API.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

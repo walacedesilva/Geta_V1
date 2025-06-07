@@ -1,6 +1,5 @@
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\appsettings.json
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\MvcTestingAppManifest.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Geta.API.exe
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Geta.API.deps.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Geta.API.runtimeconfig.json
@@ -310,8 +309,6 @@ C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\refs\Wi
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Humanizer.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Testing.dll
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Microsoft.AspNetCore.TestHost.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -395,7 +392,6 @@ C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\tr\Micr
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.csproj.AssemblyReference.cache
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\MvcTestingAppManifest.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.AssemblyInfoInputs.cache
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.AssemblyInfo.cs
