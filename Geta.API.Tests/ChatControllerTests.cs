@@ -7,7 +7,6 @@ using Geta.API.Entities;
 using Xunit;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Net.Http;
 
 namespace Geta.API.Tests;

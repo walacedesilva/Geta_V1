@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Geta.API.DTOs.Auth;
 using Xunit;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 
 namespace Geta.API.Tests;
@@ -12,9 +12,11 @@ namespace Geta.API.Tests;
 public class SearchControllerTests : IClassFixture<GetaWebApplicationFactory<Program>>
 {
     private readonly HttpClient _client;
+    private readonly GetaWebApplicationFactory<Program> _factory;
 
     public SearchControllerTests(GetaWebApplicationFactory<Program> factory)
     {
+        _factory = factory;
         _client = factory.CreateClient();
     }
 
@@ -22,6 +24,7 @@ public class SearchControllerTests : IClassFixture<GetaWebApplicationFactory<Pro
     {
         var registerDto = new RegisterDto { Username = username, Email = $"{username}@test.com", Password = "password123" };
         var response = await _client.PostAsJsonAsync("/api/auth/register", registerDto);
+        response.EnsureSuccessStatusCode();
         var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
         return loginResponse!.Token;
     }

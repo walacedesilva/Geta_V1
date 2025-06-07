@@ -6,7 +6,6 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Geta.API.DTOs.Auth;
 using Geta.API.DTOs.Profile;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
 namespace Geta.API.Tests;
@@ -22,12 +21,7 @@ public class ProfileControllerTests : IClassFixture<GetaWebApplicationFactory<Pr
 
     private async Task<(string token, int userId)> RegisterAndGetUser()
     {
-        var registerDto = new RegisterDto
-        {
-            Username = $"profileuser_{Guid.NewGuid()}",
-            Email = $"profile_{Guid.NewGuid()}@example.com",
-            Password = "password123"
-        };
+        var registerDto = new RegisterDto { Username = $"profileuser_{Guid.NewGuid()}", Email = $"profile_{Guid.NewGuid()}@example.com", Password = "password123" };
         var response = await _client.PostAsJsonAsync("/api/auth/register", registerDto);
         response.EnsureSuccessStatusCode();
         var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
