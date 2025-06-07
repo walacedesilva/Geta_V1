@@ -1,9 +1,11 @@
-using System.Text;
 using Geta.API.Data;
 using Geta.API.Hubs;
+using Geta.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +105,15 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Adiciona os serviços do SignalR
+builder.Services.AddSignalR();
+
+// Adiciona nossa implementação personalizada para mapear conexões a User IDs
+builder.Services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
+
+// Adiciona o TokenService
+builder.Services.AddScoped<TokenService>();
+
 // --- Construção da Aplicação ---
 var app = builder.Build();
 
@@ -131,3 +142,5 @@ app.MapHub<ChatHub>("/chathub");
 
 // Inicia a aplicação
 app.Run();
+
+public partial class Program { }

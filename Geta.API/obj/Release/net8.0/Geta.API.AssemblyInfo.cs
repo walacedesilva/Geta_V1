@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Geta.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c8756c55af23e684da9c99fa2d4210c44df82b2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25721ee7ad9046a2062002a71ac7a1a9d7bbeac8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Geta.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Geta.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
