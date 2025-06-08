@@ -47,42 +47,40 @@ public class ProfileController : ControllerBase
     }
 
     // PUT: api/profile
-    [HttpPut]
+    [HttpPut] // <- CORRETO: Sem ID na rota
     public async Task<IActionResult> UpdateProfile(UpdateProfileDto updateDto)
     {
+        // O ID do usuário é pego do token, o que é mais seguro.
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
         var profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == userId);
 
         if (profile == null)
         {
-            return NotFound("Perfil não encontrado para o usuário autenticado.");
-        }
-
-        // Atualiza os campos do perfil
-        profile.Bio = updateDto.Bio;
-        profile.Location = updateDto.Location;
-        profile.AvatarUrl = updateDto.AvatarUrl;
-        profile.UpdatedAt = DateTime.UtcNow;
-
-        _context.Entry(profile).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!_context.Profiles.Any(p => p.UserId == userId))
+            // Se o perfil não existe, crie um novo
+            profile = new Entities.Profile
             {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
+                UserId = userId,
+                Bio = updateDto.Bio,
+                Location = updateDto.Location,
+                AvatarUrl = updateDto.AvatarUrl,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+            _context.Profiles.Add(profile);
+        }
+        else
+        {
+            // Atualiza os campos do perfil existente
+            profile.Bio = updateDto.Bio;
+            profile.Location = updateDto.Location;
+            profile.AvatarUrl = updateDto.AvatarUrl;
+            profile.UpdatedAt = DateTime.UtcNow;
+            _context.Entry(profile).State = EntityState.Modified;
         }
 
-        return NoContent(); // Retorna 204 No Content, indicando sucesso sem corpo de resposta.
+        await _context.SaveChangesAsync();
+
+        return NoContent(); // Retorna 204 No Content
     }
 }
