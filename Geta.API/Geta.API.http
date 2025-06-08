@@ -1,0 +1,6 @@
+@Geta.API_HostAddress = http://localhost:5213
+
+GET {{Geta.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

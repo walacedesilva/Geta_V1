@@ -5,3 +5,28 @@
 
 .vs/
    
+/Geta.API/bin/Debug/net8.0/Geta.API.dll
+/Geta.API/bin/Debug/net8.0/Geta.API.exe
+/Geta.API/bin/Debug/net8.0/Geta.API.pdb
+/Geta.API/obj/Debug/net8.0/apphost.exe
+/Geta.API/obj/Debug/net8.0/Geta.API.AssemblyInfo.cs
+/Geta.API/obj/Debug/net8.0/Geta.API.AssemblyInfoInputs.cache
+/Geta.API/obj/Debug/net8.0/Geta.API.dll
+/Geta.API/obj/Debug/net8.0/Geta.API.MvcApplicationPartsAssemblyInfo.cs
+/Geta.API/obj/Debug/net8.0/Geta.API.pdb
+/Geta.API/obj/Debug/net8.0/Geta.API.sourcelink.json
+/Geta.API/obj/Debug/net8.0/ref/Geta.API.dll
+/Geta.API/obj/Debug/net8.0/refint/Geta.API.dll
+/Geta.API.Tests/bin/Debug/net8.0/Geta.API.dll
+/Geta.API.Tests/bin/Debug/net8.0/Geta.API.exe
+/Geta.API.Tests/bin/Debug/net8.0/Geta.API.pdb
+/Geta.API.Tests/bin/Debug/net8.0/Geta.API.Tests.dll
+/Geta.API.Tests/bin/Debug/net8.0/Geta.API.Tests.pdb
+/Geta.API.Tests/obj/Debug/net8.0/Geta.API.Tests.AssemblyInfo.cs
+/Geta.API.Tests/obj/Debug/net8.0/Geta.API.Tests.AssemblyInfoInputs.cache
+/Geta.API.Tests/obj/Debug/net8.0/Geta.API.Tests.csproj.AssemblyReference.cache
+/Geta.API.Tests/obj/Debug/net8.0/Geta.API.Tests.dll
+/Geta.API.Tests/obj/Debug/net8.0/Geta.API.Tests.pdb
+/Geta.API.Tests/obj/Debug/net8.0/Geta.API.Tests.sourcelink.json
+/Geta.API.Tests/obj/Debug/net8.0/ref/Geta.API.Tests.dll
+/Geta.API.Tests/obj/Debug/net8.0/refint/Geta.API.Tests.dll
