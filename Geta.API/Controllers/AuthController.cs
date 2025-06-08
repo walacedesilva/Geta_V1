@@ -17,55 +17,22 @@ public class AuthController : ControllerBase
     public AuthController(ApplicationDbContext context, IConfiguration config, TokenService tokenService)
     {
         _context = context;
-        _tokenService = new TokenService(config);
         _tokenService = tokenService;
-    }
-
-    public AuthController(ApplicationDbContext context, IConfigurationRoot configuration)
-    {
-        _context = context;
-        _tokenService = new TokenService(configuration);
     }
 
     [HttpPost("register")]
     public async Task<ActionResult<LoginResponseDto>> Register(RegisterDto registerDto)
     {
-        if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
+        if (await UserExists(registerDto.Username, registerDto.Email))
         {
-            return BadRequest("Nome de usuário já existe.");
+            return BadRequest("Nome de usuário ou email já existe.");
         }
 
-        if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
-        {
-            return BadRequest("Email já cadastrado.");
-        }
-
-        var user = new User
-        {
-            Username = registerDto.Username,
-            Email = registerDto.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
-        };
-
-        // Cria um perfil vazio para o usuário
-        user.Profile = new Profile();
-
+        var user = CreateUser(registerDto);
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        var userDto = new UserDto
-        {
-            Id = user.Id,
-            Username = user.Username,
-            Email = user.Email,
-            CreatedAt = user.CreatedAt
-        };
-
-        return new LoginResponseDto
-        {
-            Token = _tokenService.CreateToken(user),
-            User = userDto
-        };
+        return CreateLoginResponse(user);
     }
 
     [HttpPost("login")]
@@ -78,6 +45,28 @@ public class AuthController : ControllerBase
             return Unauthorized("Email ou senha inválidos.");
         }
 
+        return CreateLoginResponse(user);
+    }
+
+    private async Task<bool> UserExists(string username, string email)
+    {
+        return await _context.Users.AnyAsync(u => u.Username == username) ||
+               await _context.Users.AnyAsync(u => u.Email == email);
+    }
+
+    private User CreateUser(RegisterDto registerDto)
+    {
+        return new User
+        {
+            Username = registerDto.Username,
+            Email = registerDto.Email,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+            Profile = new Profile()
+        };
+    }
+
+    private LoginResponseDto CreateLoginResponse(User user)
+    {
         var userDto = new UserDto
         {
             Id = user.Id,
