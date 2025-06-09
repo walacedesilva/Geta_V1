@@ -1,101 +1,88 @@
-﻿using System.Security.Claims;
-using Geta.API.Data;
+﻿using Geta.API.Data;
 using Geta.API.DTOs.Chat;
 using Geta.API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
-namespace Geta.API.Hubs;
-
-[Authorize] // Apenas usuários autenticados podem se conectar a este hub.
-public class ChatHub : Hub
+namespace Geta.API.Hubs
 {
-    private readonly ApplicationDbContext _context;
-    // Para rastrear usuários online. Em produção, use uma solução distribuída como Redis.
-    private static readonly Dictionary<int, string> OnlineUsers = new();
-
-    public ChatHub(ApplicationDbContext context)
+    [Authorize]
+    public class ChatHub : Hub
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // Método chamado quando um cliente se conecta.
-    public override async Task OnConnectedAsync()
-    {
-        var userId = GetCurrentUserId();
-        if (userId == 0) return;
-
-        // Adiciona ou atualiza o usuário na lista de online com a nova connectionId.
-        OnlineUsers[userId] = Context.ConnectionId;
-
-        // Notifica outros clientes que este usuário está online.
-        await Clients.Others.SendAsync("UserConnected", userId);
-
-        await base.OnConnectedAsync();
-        Console.WriteLine($"--> Usuário conectado: {userId} com ConnectionId: {Context.ConnectionId}");
-    }
-
-    // Método chamado quando um cliente se desconecta.
-    public override async Task OnDisconnectedAsync(Exception? exception)
-    {
-        var userId = GetCurrentUserId();
-        if (userId != 0)
+        public ChatHub(ApplicationDbContext context)
         {
-            OnlineUsers.Remove(userId);
-            // Notifica outros clientes que este usuário ficou offline.
-            await Clients.Others.SendAsync("UserDisconnected", userId);
-            Console.WriteLine($"--> Usuário desconectado: {userId}");
+            _context = context;
         }
 
-        await base.OnDisconnectedAsync(exception);
-    }
-
-    // Método que o cliente chamará para enviar uma mensagem privada.
-    public async Task SendPrivateMessage(int receiverId, string content)
-    {
-        var senderId = GetCurrentUserId();
-        if (senderId == 0 || receiverId == 0 || string.IsNullOrWhiteSpace(content))
+        // NOVO MÉTODO: Chamado pelo cliente para enviar uma mensagem
+        public async Task SendMessage(string? toUserId, string message)
         {
-            // Poderia enviar um erro de volta ao cliente se necessário.
-            // await Clients.Caller.SendAsync("ReceiveError", "Dados da mensagem inválidos.");
-            return;
+            var fromUserId = int.Parse(Context.UserIdentifier!);
+            var fromUserUsername = Context.User?.FindFirstValue(ClaimTypes.Name) ?? "unknown";
+
+            // 1. Criar a entidade da mensagem
+            var chatMessage = new ChatMessage
+            {
+                SenderId = fromUserId,
+                ReceiverId = !String.IsNullOrEmpty(toUserId) ? int.Parse(toUserId) : null,
+                Content = message,
+                SentAt = DateTime.UtcNow
+            };
+
+            // 2. Salvar a mensagem no banco de dados
+            _context.ChatMessages.Add(chatMessage);
+            await _context.SaveChangesAsync();
+
+            // 3. Enviar a mensagem para o destinatário
+            if (!String.IsNullOrEmpty(toUserId))
+            {
+                await Clients.User(toUserId).SendAsync("ReceiveMessage", new ChatMessageDto
+                {
+                    Id = chatMessage.Id,
+                    SenderId = chatMessage.SenderId,
+                    ReceiverId = chatMessage.ReceiverId,
+                    Content = chatMessage.Content,
+                    SentAt = chatMessage.SentAt,
+                    SenderUsername = fromUserUsername
+                });
+            }
+            // Opcional: Enviar a mensagem de volta para o remetente para confirmar o envio
+            await Clients.Caller.SendAsync("ReceiveMessage", new ChatMessageDto
+            {
+                Id = chatMessage.Id,
+                SenderId = chatMessage.SenderId,
+                ReceiverId = chatMessage.ReceiverId,
+                Content = chatMessage.Content,
+                SentAt = chatMessage.SentAt,
+                SenderUsername = fromUserUsername
+            });
         }
 
-        var message = new ChatMessage
+        // NOVO MÉTODO: Chamado pelo cliente para notificar que está a escrever
+        public async Task UserIsTyping(string toUserId)
         {
-            SenderId = senderId,
-            ReceiverId = receiverId,
-            Content = content,
-            SentAt = DateTime.UtcNow
-        };
+            var fromUserId = Context.UserIdentifier;
+            // Envia a notificação "typing" para todos os usuários conectados, exceto o remetente
+            await Clients.User(toUserId).SendAsync("UserTyping", fromUserId);
+        }
 
-        // Salva a mensagem no banco de dados.
-        _context.ChatMessages.Add(message);
-        await _context.SaveChangesAsync();
-
-        var messageDto = new ChatMessageDto
+        public override async Task OnConnectedAsync()
         {
-            Id = message.Id,
-            SenderId = message.SenderId,
-            ReceiverId = message.ReceiverId,
-            Content = message.Content,
-            SentAt = message.SentAt,
-            IsRead = message.IsRead
-        };
+            var userId = Context.UserIdentifier;
+            // Notifica outros sobre a conexão, se necessário
+            // Exemplo: await Clients.All.SendAsync("UserIsOnline", userId);
+            await base.OnConnectedAsync();
+        }
 
-        // Envia a mensagem para o destinatário (se estiver online).
-        // Graças ao IUserIdProvider, podemos usar o ID do usuário diretamente.
-        await Clients.User(receiverId.ToString()).SendAsync("ReceivePrivateMessage", messageDto);
-
-        // Envia a mensagem de volta para o remetente também, para que a UI dele seja atualizada.
-        await Clients.Caller.SendAsync("ReceivePrivateMessage", messageDto);
-    }
-
-    // Método auxiliar para obter o ID do usuário logado a partir do contexto do Hub.
-    private int GetCurrentUserId()
-    {
-        var userIdClaim = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        return userIdClaim != null ? int.Parse(userIdClaim) : 0;
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            var userId = Context.UserIdentifier;
+            // Notifica outros sobre a desconexão, se necessário
+            // Exemplo: await Clients.All.SendAsync("UserIsOffline", userId);
+            await base.OnDisconnectedAsync(exception);
+        }
     }
 }

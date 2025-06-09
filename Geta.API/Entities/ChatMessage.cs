@@ -12,8 +12,7 @@ public class ChatMessage
     [Required]
     public int SenderId { get; set; }
 
-    [Required]
-    public int ReceiverId { get; set; }
+    public int? ReceiverId { get; set; }
 
     [Required]
     public string Content { get; set; } = string.Empty;
@@ -26,6 +25,5 @@ public class ChatMessage
     [ForeignKey("SenderId")]
     public User Sender { get; set; } = null!;
 
-    [ForeignKey("ReceiverId")]
     public User Receiver { get; set; } = null!;
 }

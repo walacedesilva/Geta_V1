@@ -33,7 +33,31 @@ public class ChatController : ControllerBase
             {
                 Id = m.Id,
                 SenderId = m.SenderId,
-                ReceiverId = m.ReceiverId,
+                ReceiverId = (int)m.ReceiverId,
+                Content = m.Content,
+                SentAt = m.SentAt,
+                IsRead = m.IsRead
+            })
+            .ToListAsync();
+
+        return Ok(messages);
+    }
+
+    // GET: api/chat/history/{contactId}
+    [HttpGet("history")]
+    public async Task<ActionResult<IEnumerable<ChatMessageDto>>> GetChatHistory()
+    {
+        var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var messages = await _context.ChatMessages
+            .Where(m => (m.SenderId == currentUserId) ||
+                        (m.ReceiverId == currentUserId))
+            .OrderBy(m => m.SentAt)
+            .Select(m => new ChatMessageDto
+            {
+                Id = m.Id,
+                SenderId = m.SenderId,
+                ReceiverId = (int)m.ReceiverId,
                 Content = m.Content,
                 SentAt = m.SentAt,
                 IsRead = m.IsRead
@@ -65,7 +89,7 @@ public class ChatController : ControllerBase
                 user => user.Id,
                 (convo, user) => new ConversationDto
                 {
-                    ContactId = convo.ContactId,
+                    ContactId = (int)convo.ContactId,
                     ContactUsername = user.Username,
                     ContactAvatarUrl = user.Profile != null ? user.Profile.AvatarUrl : null,
                     LastMessage = convo.LastMessage != null ? convo.LastMessage.Content : "",

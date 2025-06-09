@@ -77,19 +77,19 @@ public class PublicationsController : ControllerBase
             })
             .FirstAsync();
 
-        return CreatedAtAction(nameof(GetPublication), new { id = publication.Id }, createdPublication);
+        return CreatedAtAction(nameof(GetPublicationsByUser), new { userId = publication.Id }, createdPublication);
     }
 
     // GET: api/publications/5
     // Endpoint auxiliar para o CreatedAtAction funcionar
-    [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<ActionResult<PublicationDto>> GetPublication(int id)
+    [HttpGet("user/{userId}")]
+    public async Task<ActionResult<PublicationDto>> GetPublicationsByUser(int userId)
     {
         var publication = await _context.Publications
             .Include(p => p.User)
             .ThenInclude(u => u.Profile)
-            .Where(p => p.Id == id)
+            .Where(p => p.Id == userId)
             .Select(p => new PublicationDto
             {
                 Id = p.Id,

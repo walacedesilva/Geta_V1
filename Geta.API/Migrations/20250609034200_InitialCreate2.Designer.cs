@@ -4,6 +4,7 @@ using Geta.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Geta.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250609034200_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +41,7 @@ namespace Geta.API.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int?>("ReceiverId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("SenderId")
@@ -163,7 +167,8 @@ namespace Geta.API.Migrations
                     b.HasOne("Geta.API.Entities.User", "Receiver")
                         .WithMany("MessagesReceived")
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Geta.API.Entities.User", "Sender")
                         .WithMany("MessagesSent")
