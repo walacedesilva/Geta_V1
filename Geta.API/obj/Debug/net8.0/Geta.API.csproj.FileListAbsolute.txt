@@ -401,11 +401,6 @@ C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.AP
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.sourcelink.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets.development.json
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets\msbuild.Geta.API.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets\msbuild.build.Geta.API.props
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Geta.API.props
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Geta.API.props
-C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\scopedcss\bundle\Geta.API.styles.css
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.csproj.Up2Date
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.dll
@@ -413,3 +408,11 @@ C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\refint\
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.pdb
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\Geta.API.genruntimeconfig.cache
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\ref\Geta.API.dll
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\bin\Debug\net8.0\Geta.API.staticwebassets.endpoints.json
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\WG\source\repos\walacedesilva\Geta_V1\Geta.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

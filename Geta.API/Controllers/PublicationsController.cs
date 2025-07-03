@@ -77,7 +77,7 @@ public class PublicationsController : ControllerBase
             })
             .FirstAsync();
 
-        return CreatedAtAction(nameof(GetPublicationsByUser), new { userId = publication.Id }, createdPublication);
+        return CreatedAtAction(nameof(GetPublicationsByUser), new { Id = publication.Id }, createdPublication);
     }
 
     // GET: api/publications/5
@@ -89,7 +89,7 @@ public class PublicationsController : ControllerBase
         var publication = await _context.Publications
             .Include(p => p.User)
             .ThenInclude(u => u.Profile)
-            .Where(p => p.Id == userId)
+            .Where(p => p.UserId == userId)
             .Select(p => new PublicationDto
             {
                 Id = p.Id,
@@ -108,5 +108,48 @@ public class PublicationsController : ControllerBase
         }
 
         return Ok(publication);
+    }
+
+    // GET: api/users/{userId}/publications?page=1&pageSize=10
+    [HttpGet("{userId}/publications")]
+    [AllowAnonymous]
+    public async Task<ActionResult<PagedResult<PublicationDto>>> GetUserPublications(
+        int userId, int page = 1, int pageSize = 10)
+    {
+        if (page < 1) page = 1;
+        if (pageSize < 1) pageSize = 10;
+
+        var query = _context.Publications
+            .Where(p => p.UserId == userId)
+            .Include(p => p.User)
+            .ThenInclude(u => u.Profile)
+            .OrderByDescending(p => p.CreatedAt);
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(p => new PublicationDto
+            {
+                Id = p.Id,
+                UserId = p.UserId,
+                Username = p.User.Username,
+                UserAvatarUrl = p.User.Profile != null ? p.User.Profile.AvatarUrl : null,
+                Content = p.Content,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt
+            })
+            .ToListAsync();
+
+        var result = new PagedResult<PublicationDto>
+        {
+            Items = items,
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize
+        };
+
+        return Ok(result);
     }
 }

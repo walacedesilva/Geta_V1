@@ -46,7 +46,7 @@ namespace Geta.API.Hubs
                     ReceiverId = chatMessage.ReceiverId,
                     Content = chatMessage.Content,
                     SentAt = chatMessage.SentAt,
-                    SenderUsername = fromUserUsername
+                    UserName = fromUserUsername
                 });
             }
             // Opcional: Enviar a mensagem de volta para o remetente para confirmar o envio
@@ -57,7 +57,7 @@ namespace Geta.API.Hubs
                 ReceiverId = chatMessage.ReceiverId,
                 Content = chatMessage.Content,
                 SentAt = chatMessage.SentAt,
-                SenderUsername = fromUserUsername
+                UserName = fromUserUsername
             });
         }
 

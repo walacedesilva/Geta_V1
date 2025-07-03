@@ -43,13 +43,15 @@ public class ChatController : ControllerBase
         return Ok(messages);
     }
 
-    // GET: api/chat/history/{contactId}
+    // GET: api/chat/history
     [HttpGet("history")]
     public async Task<ActionResult<IEnumerable<ChatMessageDto>>> GetChatHistory()
     {
         var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
         var messages = await _context.ChatMessages
+            .Include(m => m.Sender)
+                .ThenInclude(u => u.Profile) // Inclui o perfil do remetente
             .Where(m => (m.SenderId == currentUserId) ||
                         (m.ReceiverId == currentUserId))
             .OrderBy(m => m.SentAt)
@@ -57,10 +59,12 @@ public class ChatController : ControllerBase
             {
                 Id = m.Id,
                 SenderId = m.SenderId,
-                ReceiverId = (int)m.ReceiverId,
+                ReceiverId = m.ReceiverId,
                 Content = m.Content,
                 SentAt = m.SentAt,
-                IsRead = m.IsRead
+                IsRead = m.IsRead,
+                UserName = m.Sender.Username,
+                UserAvatarUrl = m.Sender.Profile != null ? m.Sender.Profile.AvatarUrl : null
             })
             .ToListAsync();
 

@@ -28,7 +28,7 @@ public class ProfileController : ControllerBase
             .Where(u => u.Id == userId)
             .Select(u => new ProfileDto
             {
-                UserId = u.Id,
+                Id = u.Id,
                 Username = u.Username,
                 Email = u.Email, // Considere remover o email de um endpoint público
                 Bio = u.Profile != null ? u.Profile.Bio : null,

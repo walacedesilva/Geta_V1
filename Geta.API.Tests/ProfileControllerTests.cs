@@ -41,7 +41,7 @@ public class ProfileControllerTests : IClassFixture<GetaWebApplicationFactory<Pr
         response.EnsureSuccessStatusCode();
         var profile = await response.Content.ReadFromJsonAsync<ProfileDto>();
         Assert.NotNull(profile);
-        Assert.Equal(userId, profile.UserId);
+        Assert.Equal(userId, profile.Id);
     }
 
     [Fact]

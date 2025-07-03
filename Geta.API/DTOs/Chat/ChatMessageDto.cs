@@ -8,5 +8,6 @@ public class ChatMessageDto
     public string Content { get; set; } = string.Empty;
     public DateTime SentAt { get; set; }
     public bool IsRead { get; set; }
-    public string SenderUsername { get; internal set; }
+    public string UserName { get; internal set; }
+    public string? UserAvatarUrl { get; set; }
 }
