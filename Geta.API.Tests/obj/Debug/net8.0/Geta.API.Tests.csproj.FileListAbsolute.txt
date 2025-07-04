@@ -433,3 +433,4 @@ C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API.Tests\obj\Debug\net8.0\r
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API.Tests\obj\Debug\net8.0\Geta.API.Tests.pdb
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API.Tests\obj\Debug\net8.0\Geta.API.Tests.genruntimeconfig.cache
 C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API.Tests\obj\Debug\net8.0\ref\Geta.API.Tests.dll
+C:\Users\WG\Source\Repos\walacedesilva\Geta_V1\Geta.API.Tests\bin\Debug\net8.0\Geta.API.staticwebassets.endpoints.json

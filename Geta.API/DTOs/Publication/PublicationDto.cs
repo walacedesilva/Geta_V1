@@ -9,4 +9,7 @@ public class PublicationDto
     public string Content { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public int CommentCount { get; set; } // Será implementado a seguir
+    public int LikesCount { get; set; }
+    public bool HasLiked { get; set; }
 }

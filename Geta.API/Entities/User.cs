@@ -31,4 +31,10 @@ public class User
     public ICollection<Publication> Publications { get; set; } = new List<Publication>();
     public ICollection<ChatMessage> MessagesSent { get; set; } = new List<ChatMessage>();
     public ICollection<ChatMessage> MessagesReceived { get; set; } = new List<ChatMessage>();
+
+    public ICollection<Follow> Followers { get; set; } = new List<Follow>();
+    public ICollection<Follow> Following { get; set; } = new List<Follow>();
+
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
 }

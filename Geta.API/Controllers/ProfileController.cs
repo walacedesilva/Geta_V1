@@ -1,9 +1,10 @@
-﻿using System.Security.Claims;
-using Geta.API.Data;
+﻿using Geta.API.Data;
 using Geta.API.DTOs.Profile;
+using Geta.API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Geta.API.Controllers;
 
@@ -24,6 +25,11 @@ public class ProfileController : ControllerBase
     [AllowAnonymous] // Permite que qualquer um veja perfis
     public async Task<ActionResult<ProfileDto>> GetProfile(int userId)
     {
+        // Obtém o ID do usuário atual a partir do token, se autenticado
+        int? currentUserId = User.Identity?.IsAuthenticated == true
+            ? int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)
+            : (int?)null;
+
         var userProfile = await _context.Users
             .Where(u => u.Id == userId)
             .Select(u => new ProfileDto
@@ -34,7 +40,11 @@ public class ProfileController : ControllerBase
                 Bio = u.Profile != null ? u.Profile.Bio : null,
                 Location = u.Profile != null ? u.Profile.Location : null,
                 AvatarUrl = u.Profile != null ? u.Profile.AvatarUrl : null,
-                MemberSince = u.CreatedAt
+                MemberSince = u.CreatedAt,
+                FollowersCount = u.Followers.Count,
+                FollowingCount = u.Following.Count,
+                IsFollowing = currentUserId.HasValue && _context.Follows
+                    .Any(f => f.FollowerId == currentUserId.Value && f.FollowingId == userId)
             })
             .FirstOrDefaultAsync();
 

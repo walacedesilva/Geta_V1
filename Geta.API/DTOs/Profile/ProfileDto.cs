@@ -9,4 +9,7 @@ public class ProfileDto
     public string? Location { get; set; }
     public string? AvatarUrl { get; set; }
     public DateTime MemberSince { get; set; }
+    public int FollowersCount { get; set; }
+    public int FollowingCount { get; set; }
+    public bool IsFollowing { get; set; }
 }

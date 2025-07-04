@@ -55,6 +55,68 @@ namespace Geta.API.Migrations
                     b.ToTable("ChatMessages");
                 });
 
+            modelBuilder.Entity("Geta.API.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("PublicationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PublicationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Geta.API.Entities.Follow", b =>
+                {
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("FollowingId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("FollowerId", "FollowingId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.ToTable("Follows");
+                });
+
+            modelBuilder.Entity("Geta.API.Entities.Like", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PublicationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "PublicationId");
+
+                    b.HasIndex("PublicationId");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("Geta.API.Entities.Profile", b =>
                 {
                     b.Property<int>("Id")
@@ -176,6 +238,63 @@ namespace Geta.API.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("Geta.API.Entities.Comment", b =>
+                {
+                    b.HasOne("Geta.API.Entities.Publication", "Publication")
+                        .WithMany("Comments")
+                        .HasForeignKey("PublicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Geta.API.Entities.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Publication");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Geta.API.Entities.Follow", b =>
+                {
+                    b.HasOne("Geta.API.Entities.User", "Follower")
+                        .WithMany("Following")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Geta.API.Entities.User", "Following")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
+                });
+
+            modelBuilder.Entity("Geta.API.Entities.Like", b =>
+                {
+                    b.HasOne("Geta.API.Entities.Publication", "Publication")
+                        .WithMany("Likes")
+                        .HasForeignKey("PublicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Geta.API.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Publication");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Geta.API.Entities.Profile", b =>
                 {
                     b.HasOne("Geta.API.Entities.User", "User")
@@ -198,8 +317,21 @@ namespace Geta.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Geta.API.Entities.Publication", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Likes");
+                });
+
             modelBuilder.Entity("Geta.API.Entities.User", b =>
                 {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Followers");
+
+                    b.Navigation("Following");
+
                     b.Navigation("MessagesReceived");
 
                     b.Navigation("MessagesSent");

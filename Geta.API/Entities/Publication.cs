@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Linq;
 
 namespace Geta.API.Entities;
 
@@ -22,4 +23,7 @@ public class Publication
     // Propriedade de Navegação
     [ForeignKey("UserId")]
     public User User { get; set; } = null!;
+
+    public ICollection<Like> Likes { get; set; } = new List<Like>();
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }
